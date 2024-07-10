@@ -5,7 +5,15 @@
       let pkgs = nixpkgs.legacyPackages.${system};
       in {
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ cmake openocd gcc-arm-embedded ninja ];
+          nativeBuildInputs = with pkgs; [
+            cmake
+            openocd
+            gcc-arm-embedded
+            ninja
+          ];
+          shellHook = ''
+            export OPENOCD_PATH="${pkgs.openocd}"
+          '';
         };
       });
 }
